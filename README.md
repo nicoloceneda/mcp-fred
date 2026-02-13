@@ -186,6 +186,8 @@ Most recent 13 GS10 observations from [FRED](https://fred.stlouisfed.org/) (newe
 | 2025-02-01 | 4.45 |
 | 2025-01-01 | 4.63 |
 
+You can see that this matches the data available on FRED.
+
 ![GS10 chart](assets/fredgraph.png)
 
 ## Functionality and endpoint coverage
