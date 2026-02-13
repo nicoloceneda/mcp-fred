@@ -123,6 +123,10 @@ PY
 
 </details>
 
+## Example
+
+<iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1RLTF&width=670&height=475" scrolling="no" frameborder="0" style="overflow:hidden; width:670px; height:525px;" allowTransparency="true" loading="lazy"></iframe>
+
 ## Functionality and endpoint coverage
 
 The server includes both dedicated tools and generic passthrough tools.
@@ -214,3 +218,4 @@ The server includes both dedicated tools and generic passthrough tools.
 - `get_release_observations_v2` -> `fred/v2/release/observations`
 
 </details>
+
