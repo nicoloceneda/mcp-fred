@@ -16,8 +16,8 @@ MCP server for:
 ### Option A: Local clone (recommended for development)
 
 ```bash
-git clone https://github.com/<your-org-or-user>/fred-mcp.git
-cd fred-mcp
+git clone https://github.com/nicoloceneda/mcp-fred.git
+cd mcp-fred
 python3 -m venv .venv
 .venv/bin/pip install -e .
 ```
@@ -26,7 +26,7 @@ python3 -m venv .venv
 
 ```bash
 python3 -m venv .venv
-.venv/bin/pip install "git+https://github.com/<your-org-or-user>/fred-mcp.git"
+.venv/bin/pip install "git+https://github.com/nicoloceneda/mcp-fred.git"
 ```
 
 ## API key setup
@@ -52,7 +52,7 @@ export FRED_API_KEY="your_fred_api_key_here"
 ## Run the MCP server
 
 ```bash
-cd fred-mcp
+cd mcp-fred
 .venv/bin/python fred_server.py
 ```
 
@@ -96,7 +96,7 @@ codex mcp get fred
 Run a protocol-level smoke test:
 
 ```bash
-cd fred-mcp
+cd mcp-fred
 .venv/bin/python - <<'PY'
 import asyncio
 from mcp import ClientSession, StdioServerParameters
