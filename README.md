@@ -49,12 +49,12 @@ FRED_API_KEY=your_fred_api_key_here
 
 ## Configure MCP clients
 
-### Codex CLI/Desktop
+### Codex CLI
 
-Add once:
+Run once (note: you need to replace `/absolute/path/to/` with your actual path):
 
 ```bash
-codex mcp add fred -- /absolute/path/to/fred-mcp/.venv/bin/python /absolute/path/to/fred-mcp/fred_server.py
+codex mcp add fred -- /absolute/path/to/mcp-fred/.venv/bin/python /absolute/path/to/mcp-fred/fred_server.py
 ```
 
 Check:
@@ -64,14 +64,18 @@ codex mcp list
 codex mcp get fred
 ```
 
+Successful setup should show:
+- In `codex mcp list`: `fred` with `Status` = `enabled`
+- In `codex mcp get fred`: `enabled: true`
+
 ### Generic `mcpServers` JSON config
 
 ```json
 {
   "mcpServers": {
     "fred": {
-      "command": "/absolute/path/to/fred-mcp/.venv/bin/python",
-      "args": ["/absolute/path/to/fred-mcp/fred_server.py"],
+      "command": "/absolute/path/to/mcp-fred/.venv/bin/python",
+      "args": ["/absolute/path/to/mcp-fred/fred_server.py"],
       "env": {
         "FRED_API_KEY": "your_fred_api_key_here"
       }
