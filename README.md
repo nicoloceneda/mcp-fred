@@ -70,6 +70,8 @@ Successful setup should show:
 
 ### Generic `mcpServers` JSON config
 
+Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.
+
 ```json
 {
   "mcpServers": {
