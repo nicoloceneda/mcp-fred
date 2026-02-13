@@ -9,7 +9,6 @@ MCP server for:
 
 - Python `>=3.11`
 - A FRED API key from [FRED API Keys](https://fred.stlouisfed.org/docs/api/api_key.html)
-- Internet access from the machine running the server
 
 ## Install
 
