@@ -70,6 +70,8 @@ Successful setup should show:
 - In `codex mcp list`: `fred` with `Status` = `enabled`
 - In `codex mcp get fred`: `enabled: true`
 
+Launch Codex (`codex`) and verify that the MCP has successfully been installed (`/mcp`).
+
 ### Generic `mcpServers` JSON config
 
 Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.
