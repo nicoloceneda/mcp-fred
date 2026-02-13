@@ -88,6 +88,9 @@ Use this when your MCP client expects a JSON-based manual server configuration i
 
 ## Optional quick smoke test
 
+<details>
+<summary>Show optional smoke test script</summary>
+
 Run this script to verify that the MCP server starts, the stdio MCP connection initializes correctly, and a real tool call (`search_series`) succeeds.
 
 ```bash
@@ -113,6 +116,8 @@ async def main():
 asyncio.run(main())
 PY
 ```
+
+</details>
 
 ## Functionality and endpoint coverage
 
