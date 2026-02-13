@@ -13,6 +13,8 @@ MCP server for:
 
 ## Install
 
+First, `cd` into the directory where you want the `mcp-fred` repository to be created. Then execute the following commands from the terminal.
+
 ```bash
 git clone https://github.com/nicoloceneda/mcp-fred.git
 cd mcp-fred
