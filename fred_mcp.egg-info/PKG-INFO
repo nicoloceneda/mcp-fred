@@ -1,0 +1,49 @@
+Metadata-Version: 2.4
+Name: fred-mcp
+Version: 0.1.0
+Summary: MCP server for querying the FRED economic data API.
+Requires-Python: >=3.11
+Description-Content-Type: text/markdown
+Requires-Dist: httpx<1,>=0.27
+Requires-Dist: mcp[cli]<2,>=1.9.4
+Requires-Dist: python-dotenv<2,>=1.0
+
+# fred-mcp
+
+MCP server for querying FRED (Federal Reserve Economic Data) series.
+
+## Setup
+
+```bash
+cd /Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp
+uv sync
+```
+
+The server reads `FRED_API_KEY` from environment variables or `.env`.
+
+## Run locally
+
+```bash
+cd /Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp
+uv run fred_server.py
+```
+
+## MCP tools
+
+- `search_series(query, limit=10)`: Search series IDs and titles.
+- `get_series(series_id)`: Retrieve one series metadata record.
+- `get_observations(series_id, observation_start=None, observation_end=None, limit=100, sort_order="desc")`: Retrieve observations.
+
+## MCP client command example
+
+Command:
+
+```text
+uv
+```
+
+Args:
+
+```json
+["--directory", "/Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp", "run", "fred_server.py"]
+```

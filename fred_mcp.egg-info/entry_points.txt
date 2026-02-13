@@ -1,0 +1,2 @@
+[console_scripts]
+fred-mcp = fred_server:main

@@ -1,0 +1,21 @@
+[project]
+name = "fred-mcp"
+version = "0.1.0"
+description = "MCP server for querying the FRED economic data API."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = [
+  "httpx>=0.27,<1",
+  "mcp[cli]>=1.9.4,<2",
+  "python-dotenv>=1.0,<2",
+]
+
+[project.scripts]
+fred-mcp = "fred_server:main"
+
+[build-system]
+requires = ["setuptools>=68", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+py-modules = ["fred_server"]
