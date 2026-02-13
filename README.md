@@ -1,4 +1,4 @@
-# fred-mcp
+# Fred St Louis MCP
 
 MCP server for:
 - FRED API v1 (`/fred/*`)
