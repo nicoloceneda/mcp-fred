@@ -86,9 +86,9 @@ Use this when your MCP client expects a JSON-based manual server configuration i
 }
 ```
 
-## Quick test
+## Optional quick smoke test
 
-Run a protocol-level smoke test:
+Run this script to verify that the MCP server starts, the stdio MCP connection initializes correctly, and a real tool call (`search_series`) succeeds.
 
 ```bash
 cd mcp-fred
