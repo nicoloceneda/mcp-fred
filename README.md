@@ -1,5 +1,17 @@
 # Fred St Louis MCP
 
+![Project cover](assets/project_cover.png)
+
+![Status: Active Development and Maintained](https://img.shields.io/badge/status-active%20development%20%26%20maintained-brightgreen)
+
+*Author*: Nicolo Ceneda \
+*Contact*: n.ceneda20@imperial.ac.uk \
+*Website*: [nicoloceneda.github.io](https://nicoloceneda.github.io/) \
+*Institution*: Imperial College London \
+*Course*: PhD in Finance
+
+## Description
+
 MCP server for:
 - FRED API v1 (`/fred/*`)
 - GeoFRED maps API (`/geofred/*`)
