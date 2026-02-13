@@ -23,7 +23,7 @@ python3 -m venv .venv
 
 ## API key setup
 
-Create a local `.env` file (do not commit this file):
+Create a local `.env`:
 
 ```bash
 cp .env.example .env
@@ -33,12 +33,6 @@ Then set:
 
 ```dotenv
 FRED_API_KEY=your_fred_api_key_here
-```
-
-You can also set it directly in your shell:
-
-```bash
-export FRED_API_KEY="your_fred_api_key_here"
 ```
 
 ## Run the MCP server
