@@ -121,9 +121,10 @@ PY
 
 </details>
 
-## Example
+## Examples
 
-Example Codex run using this MCP server to retrieve the most recent 13 values of `GS10`.
+<details>
+<summary>Codex run using this MCP server to retrieve the most recent 13 values of `GS10`.</summary>
 
 ```text
 $ codex
@@ -137,34 +138,6 @@ I’ll query the FRED MCP fred/series/observations endpoint for GS10 with limit=
 
 Called fred.get_observations({"series_id":"GS10","limit":13,"sort_order":"desc"})
 ```
-
-<details>
-<summary>Raw tool response</summary>
-
-```json
-{
-  "series_id": "GS10",
-  "count": 13,
-  "offset": 0,
-  "observations": [
-    {"date": "2026-01-01", "value": "4.21"},
-    {"date": "2025-12-01", "value": "4.14"},
-    {"date": "2025-11-01", "value": "4.09"},
-    {"date": "2025-10-01", "value": "4.06"},
-    {"date": "2025-09-01", "value": "4.12"},
-    {"date": "2025-08-01", "value": "4.26"},
-    {"date": "2025-07-01", "value": "4.39"},
-    {"date": "2025-06-01", "value": "4.38"},
-    {"date": "2025-05-01", "value": "4.42"},
-    {"date": "2025-04-01", "value": "4.28"},
-    {"date": "2025-03-01", "value": "4.28"},
-    {"date": "2025-02-01", "value": "4.45"},
-    {"date": "2025-01-01", "value": "4.63"}
-  ]
-}
-```
-
-</details>
 
 Most recent 13 GS10 observations from [FRED](https://fred.stlouisfed.org/) (newest first, percent):
 
@@ -187,6 +160,8 @@ Most recent 13 GS10 observations from [FRED](https://fred.stlouisfed.org/) (newe
 You can see that this matches the data available on FRED.
 
 ![GS10 chart](assets/fredgraph.png)
+
+</details>
 
 ## Functionality and endpoint coverage
 
