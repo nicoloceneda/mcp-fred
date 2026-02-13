@@ -72,7 +72,8 @@ Launch Codex (`codex`) and verify that the MCP has successfully been installed (
 
 ### Generic `mcpServers` JSON config
 
-Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.
+<details>
+<summary>Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.</summary>
 
 ```json
 {
@@ -87,6 +88,8 @@ Use this when your MCP client expects a JSON-based manual server configuration i
   }
 }
 ```
+
+</details>
 
 ## Optional quick smoke test
 
