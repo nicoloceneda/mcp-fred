@@ -127,13 +127,17 @@ PY
 
 The server includes both dedicated tools and generic passthrough tools.
 
-### Generic passthrough
+<details>
+<summary>Generic passthrough</summary>
 
 - `fred_request(endpoint, params_json)` for `/fred/*`
 - `geofred_request(endpoint, params_json)` for `/geofred/*`
 - `fred_v2_request(endpoint, params_json)` for `/fred/v2/*`
 
-### FRED categories
+</details>
+
+<details>
+<summary>FRED categories</summary>
 
 - `get_category` -> `fred/category`
 - `get_category_children` -> `fred/category/children`
@@ -142,7 +146,10 @@ The server includes both dedicated tools and generic passthrough tools.
 - `get_category_tags` -> `fred/category/tags`
 - `get_category_related_tags` -> `fred/category/related_tags`
 
-### FRED releases
+</details>
+
+<details>
+<summary>FRED releases</summary>
 
 - `get_releases` -> `fred/releases`
 - `get_releases_dates` -> `fred/releases/dates`
@@ -154,7 +161,10 @@ The server includes both dedicated tools and generic passthrough tools.
 - `get_release_related_tags` -> `fred/release/related_tags`
 - `get_release_tables` -> `fred/release/tables`
 
-### FRED series
+</details>
+
+<details>
+<summary>FRED series</summary>
 
 - `get_series` -> `fred/series`
 - `get_series_categories` -> `fred/series/categories`
@@ -168,33 +178,39 @@ The server includes both dedicated tools and generic passthrough tools.
 - `get_series_updates` -> `fred/series/updates`
 - `get_series_vintage_dates` -> `fred/series/vintagedates`
 
-### FRED sources
+</details>
+
+<details>
+<summary>FRED sources</summary>
 
 - `get_sources` -> `fred/sources`
 - `get_source` -> `fred/source`
 - `get_source_releases` -> `fred/source/releases`
 
-### FRED tags
+</details>
+
+<details>
+<summary>FRED tags</summary>
 
 - `get_tags` -> `fred/tags`
 - `get_related_tags` -> `fred/related_tags`
 - `get_tag_series` -> `fred/tags/series`
 
-### GeoFRED maps
+</details>
+
+<details>
+<summary>GeoFRED maps</summary>
 
 - `get_map_shape_file` -> `geofred/shapes/file`
 - `get_map_series_group` -> `geofred/series/group`
 - `get_map_series_data` -> `geofred/series/data`
 - `get_map_regional_data` -> `geofred/regional/data`
 
-### FRED v2
+</details>
+
+<details>
+<summary>FRED v2</summary>
 
 - `get_release_observations_v2` -> `fred/v2/release/observations`
 
-## Common examples
-
-- Search: `search_series("unemployment rate", limit=5)`
-- Observations with transform: `get_observations("CPIAUCSL", observation_start="2024-01-01", units="pc1", limit=12)`
-- Category browsing: `get_category_children(0)`
-- Release exploration: `get_releases(limit=10)`
-- Raw endpoint call: `fred_request("series/observations", "{\"series_id\":\"UNRATE\",\"limit\":3}")`
+</details>
