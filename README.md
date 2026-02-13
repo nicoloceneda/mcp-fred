@@ -125,7 +125,68 @@ PY
 
 ## Example
 
-<iframe src="https://fred.stlouisfed.org/graph/graph-landing.php?g=1RLTF&width=670&height=475" scrolling="no" frameborder="0" style="overflow:hidden; width:670px; height:525px;" allowTransparency="true" loading="lazy"></iframe>
+Example Codex run using this MCP server to retrieve the most recent 13 values of `GS10`.
+
+```text
+$ codex
+OpenAI Codex (v0.101.0)
+model: gpt-5.3-codex xhigh
+directory: ~
+
+> Use the FRED MCP to retrieve the last 13 values of GS10.
+
+I’ll query the FRED MCP fred/series/observations endpoint for GS10 with limit=13 and descending order so we get the most recent 13 observations directly.
+
+Called fred.get_observations({"series_id":"GS10","limit":13,"sort_order":"desc"})
+```
+
+<details>
+<summary>Raw tool response</summary>
+
+```json
+{
+  "series_id": "GS10",
+  "count": 13,
+  "offset": 0,
+  "observations": [
+    {"date": "2026-01-01", "value": "4.21"},
+    {"date": "2025-12-01", "value": "4.14"},
+    {"date": "2025-11-01", "value": "4.09"},
+    {"date": "2025-10-01", "value": "4.06"},
+    {"date": "2025-09-01", "value": "4.12"},
+    {"date": "2025-08-01", "value": "4.26"},
+    {"date": "2025-07-01", "value": "4.39"},
+    {"date": "2025-06-01", "value": "4.38"},
+    {"date": "2025-05-01", "value": "4.42"},
+    {"date": "2025-04-01", "value": "4.28"},
+    {"date": "2025-03-01", "value": "4.28"},
+    {"date": "2025-02-01", "value": "4.45"},
+    {"date": "2025-01-01", "value": "4.63"}
+  ]
+}
+```
+
+</details>
+
+Most recent 13 GS10 observations from [FRED](https://fred.stlouisfed.org/) (newest first, percent):
+
+| Date | Value |
+|---|---:|
+| 2026-01-01 | 4.21 |
+| 2025-12-01 | 4.14 |
+| 2025-11-01 | 4.09 |
+| 2025-10-01 | 4.06 |
+| 2025-09-01 | 4.12 |
+| 2025-08-01 | 4.26 |
+| 2025-07-01 | 4.39 |
+| 2025-06-01 | 4.38 |
+| 2025-05-01 | 4.42 |
+| 2025-04-01 | 4.28 |
+| 2025-03-01 | 4.28 |
+| 2025-02-01 | 4.45 |
+| 2025-01-01 | 4.63 |
+
+![GS10 chart](assets/fredgraph.png)
 
 ## Functionality and endpoint coverage
 
@@ -218,4 +279,3 @@ The server includes both dedicated tools and generic passthrough tools.
 - `get_release_observations_v2` -> `fred/v2/release/observations`
 
 </details>
-
