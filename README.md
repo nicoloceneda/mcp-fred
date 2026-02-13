@@ -24,7 +24,7 @@ Supported APIs:
 - Python `>=3.11`
 - A FRED API key from [FRED API Keys](https://fred.stlouisfed.org/docs/api/api_key.html)
 
-## Install
+## Installation Step 1: Cloning and APY Key
 
 First, `cd` into the directory where you want the `mcp-fred` repository to be created. Then execute the following commands from the terminal.
 
@@ -34,8 +34,6 @@ cd mcp-fred
 python3 -m venv .venv
 .venv/bin/pip install -e .
 ```
-
-## API key setup
 
 Create a local `.env`:
 
@@ -49,7 +47,7 @@ Then set:
 FRED_API_KEY=your_fred_api_key_here
 ```
 
-## Configure MCP clients
+## Installation Step 2: Configure MCP clients
 
 ### Codex CLI
 
