@@ -15,9 +15,9 @@
 This repository provides an MCP server that lets MCP-compatible clients query and explore economic data from [FRED](https://fred.stlouisfed.org/). It exposes structured tools for common workflows (searching series, retrieving observations, browsing categories/releases/tags) and also supports raw endpoint passthrough for advanced use cases.
 
 Supported APIs:
-- [FRED](https://fred.stlouisfed.org/) API v1 (`/fred/*`)
-- Geo[FRED](https://fred.stlouisfed.org/) maps API (`/geofred/*`)
-- [FRED](https://fred.stlouisfed.org/) API v2 (`/fred/v2/*`, including a dedicated tool for `release/observations`)
+- FRED API v1 (`/fred/*`)
+- GeoRE maps API (`/geofred/*`)
+- FRED API v2 (`/fred/v2/*`)
 
 ## Requirements
 
