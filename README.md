@@ -124,7 +124,7 @@ PY
 ## Examples
 
 <details>
-<summary>Codex run using this MCP server to retrieve the most recent 13 values of `GS10`.</summary>
+<summary>Calling MCP explicitly and with Series ID specified.</summary>
 
 ```text
 $ codex
@@ -160,6 +160,26 @@ Most recent 13 GS10 observations from [FRED](https://fred.stlouisfed.org/) (newe
 You can see that this matches the data available on FRED.
 
 ![GS10 chart](assets/fredgraph.png)
+
+</details>
+
+<details>
+<summary>Without calling MCP explicitly and no Series ID specified.</summary>
+
+```text
+$ codex
+OpenAI Codex (v0.101.0)
+model: gpt-5.3-codex xhigh
+directory: ~
+
+> Tell me the latest value of US GDP (nominal).
+
+I’ll pull the most recent GDP observation from FRED now and report its date and value.
+
+Called fred.get_observations({"series_id":"GDP","limit":1,"sort_order":"desc"})
+```
+
+Latest FRED nominal U.S. GDP (GDP) is 31,098.027 (billions of dollars, SAAR), for 2025-07-01 (i.e., 2025 Q3).
 
 </details>
 
