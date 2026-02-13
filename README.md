@@ -13,20 +13,11 @@ MCP server for:
 
 ## Install
 
-### Option A: Local clone (recommended for development)
-
 ```bash
 git clone https://github.com/nicoloceneda/mcp-fred.git
 cd mcp-fred
 python3 -m venv .venv
 .venv/bin/pip install -e .
-```
-
-### Option B: Direct from GitHub
-
-```bash
-python3 -m venv .venv
-.venv/bin/pip install "git+https://github.com/nicoloceneda/mcp-fred.git"
 ```
 
 ## API key setup
