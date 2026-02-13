@@ -47,15 +47,6 @@ Then set:
 FRED_API_KEY=your_fred_api_key_here
 ```
 
-## Run the MCP server
-
-```bash
-cd mcp-fred
-.venv/bin/python fred_server.py
-```
-
-The server uses stdio transport (typical MCP local setup).
-
 ## Configure MCP clients
 
 ### Codex CLI/Desktop
