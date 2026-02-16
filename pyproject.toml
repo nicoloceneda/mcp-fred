@@ -10,6 +10,18 @@ dependencies = [
   "python-dotenv>=1.0,<2",
 ]
 
+[project.optional-dependencies]
+tests = [
+  "pytest>=8.0,<9",
+  "pytest-asyncio>=0.23,<1",
+  "respx>=0.22,<1",
+]
+dev = [
+  "pytest>=8.0,<9",
+  "pytest-asyncio>=0.23,<1",
+  "respx>=0.22,<1",
+]
+
 [project.scripts]
 fred-mcp = "fred_server:main"
 
@@ -19,3 +31,8 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools]
 py-modules = ["fred_server"]
+packages = ["fred_mcp"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
