@@ -49,7 +49,7 @@ FRED_API_KEY=your_fred_api_key_here
 
 ## Installation Step 2: Configure MCP clients
 
-### Codex CLI
+### Path A: Codex CLI
 
 Run once (note: you need to replace `/absolute/path/to/` with your actual path):
 
@@ -70,10 +70,27 @@ Successful setup should show:
 
 Launch Codex (`codex`) and verify that the MCP has successfully been installed (`/mcp`).
 
-### Generic `mcpServers` JSON config
+### Path B: Claude Code CLI
+
+Run once (note: you need to replace `/absolute/path/to/` with your actual path):
+
+```bash
+claude mcp add --transport stdio fred -- /absolute/path/to/mcp-fred/.venv/bin/python /absolute/path/to/mcp-fred/fred_server.py
+```
+
+Check:
+
+```bash
+claude mcp list
+claude mcp get fred
+```
+
+Launch Claude Code (`claude`) and verify that the MCP has successfully been installed (`/mcp`).
+
+### Optional: Generic `mcpServers` JSON config
 
 <details>
-<summary>Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.</summary>
+<summary>Use this when your MCP client expects a JSON-based manual server configuration (for Claude Code team-shared setup, this is typically `.mcp.json`).</summary>
 
 ```json
 {
