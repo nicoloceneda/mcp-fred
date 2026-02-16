@@ -7,43 +7,340 @@ Description-Content-Type: text/markdown
 Requires-Dist: httpx<1,>=0.27
 Requires-Dist: mcp[cli]<2,>=1.9.4
 Requires-Dist: python-dotenv<2,>=1.0
+Provides-Extra: tests
+Requires-Dist: pytest<9,>=8.0; extra == "tests"
+Requires-Dist: pytest-asyncio<1,>=0.23; extra == "tests"
+Requires-Dist: respx<1,>=0.22; extra == "tests"
+Provides-Extra: dev
+Requires-Dist: pytest<9,>=8.0; extra == "dev"
+Requires-Dist: pytest-asyncio<1,>=0.23; extra == "dev"
+Requires-Dist: respx<1,>=0.22; extra == "dev"
 
-# fred-mcp
+# Fred St Louis MCP
 
-MCP server for querying FRED (Federal Reserve Economic Data) series.
+![Project cover](assets/project_cover.png)
 
-## Setup
+![Status: Active Development and Maintained](https://img.shields.io/badge/status-active%20development%20%26%20maintained-brightgreen)
+
+*Author*: Nicolo Ceneda \
+*Contact*: n.ceneda20@imperial.ac.uk \
+*Website*: [nicoloceneda.github.io](https://nicoloceneda.github.io/) \
+*Institution*: Imperial College London \
+*Course*: PhD in Finance
+
+## Description
+
+This repository provides an MCP server that lets MCP-compatible clients query and explore economic data from [FRED](https://fred.stlouisfed.org/). It exposes structured tools for common workflows (searching series, retrieving observations, browsing categories/releases/tags) and also supports raw endpoint passthrough for advanced use cases.
+
+Supported APIs:
+- FRED API v1 (`/fred/*`)
+- GeoFRED maps API (`/geofred/*`)
+- FRED API v2 (`/fred/v2/*`)
+
+## Requirements
+
+- Python `>=3.11`
+- A FRED API key from [FRED API Keys](https://fred.stlouisfed.org/docs/api/api_key.html)
+
+## Installation Step 1: Cloning and API Key
+
+First, `cd` into the directory where you want the `mcp-fred` repository to be created. Then execute the following commands from the terminal.
 
 ```bash
-cd /Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp
-uv sync
+git clone https://github.com/nicoloceneda/mcp-fred.git
+cd mcp-fred
+python3 -m venv .venv
+.venv/bin/pip install -e .
 ```
 
-The server reads `FRED_API_KEY` from environment variables or `.env`.
-
-## Run locally
+Create a local `.env`:
 
 ```bash
-cd /Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp
-uv run fred_server.py
+cp .env.example .env
 ```
 
-## MCP tools
+Then set:
 
-- `search_series(query, limit=10)`: Search series IDs and titles.
-- `get_series(series_id)`: Retrieve one series metadata record.
-- `get_observations(series_id, observation_start=None, observation_end=None, limit=100, sort_order="desc")`: Retrieve observations.
-
-## MCP client command example
-
-Command:
-
-```text
-uv
+```dotenv
+FRED_API_KEY=your_fred_api_key_here
 ```
 
-Args:
+## Installation Step 2: Configure MCP clients
+
+### Codex CLI
+
+Run once (note: you need to replace `/absolute/path/to/` with your actual path):
+
+```bash
+codex mcp add fred -- /absolute/path/to/mcp-fred/.venv/bin/python /absolute/path/to/mcp-fred/fred_server.py
+```
+
+Check:
+
+```bash
+codex mcp list
+codex mcp get fred
+```
+
+Successful setup should show:
+- In `codex mcp list`: `fred` with `Status` = `enabled`
+- In `codex mcp get fred`: `enabled: true`
+
+Launch Codex (`codex`) and verify that the MCP has successfully been installed (`/mcp`).
+
+### Generic `mcpServers` JSON config
+
+<details>
+<summary>Use this when your MCP client expects a JSON-based manual server configuration instead of `codex mcp add`.</summary>
 
 ```json
-["--directory", "/Users/nicoloceneda/Library/CloudStorage/Dropbox/research/mcp/fred-mcp", "run", "fred_server.py"]
+{
+  "mcpServers": {
+    "fred": {
+      "command": "/absolute/path/to/mcp-fred/.venv/bin/python",
+      "args": ["/absolute/path/to/mcp-fred/fred_server.py"],
+      "env": {
+        "FRED_API_KEY": "your_fred_api_key_here"
+      }
+    }
+  }
+}
 ```
+
+</details>
+
+## Development workflow
+
+Use a local virtual environment and install in editable mode with test extras:
+
+```bash
+python3 -m venv .venv
+. .venv/bin/activate
+python -m pip install --upgrade pip
+python -m pip install -e ".[tests]"
+```
+
+Run the MCP server locally:
+
+```bash
+python fred_server.py
+```
+
+## Test instructions
+
+Run tests from the repository root:
+
+```bash
+pytest -q
+```
+
+Notes:
+- CI runs the same install and test commands from `.github/workflows/ci.yml`.
+- `pytest` exits non-zero when no tests are collected; treat this as a required fix before merging.
+
+## Contributor notes
+
+- Keep changes scoped to your owned files and do not revert unrelated edits from other contributors.
+- Keep setup and verification commands copy/paste runnable from the repository root.
+- If behavior changes, update docs and tests in the same PR.
+- Document any breaking tool-interface changes clearly in the PR description.
+
+## Compatibility and error handling policy
+
+- Supported Python baseline is `>=3.11`; CI validates on Python `3.11`.
+- Preserve existing tool names and parameter contracts unless the breaking change is explicitly documented.
+- Return explicit errors for invalid inputs and missing configuration (for example, missing `FRED_API_KEY` or invalid JSON).
+- Propagate upstream FRED/GeoFRED HTTP failures as actionable errors; do not silently swallow API failures.
+
+## Optional quick smoke test
+
+<details>
+<summary>Show optional smoke test script</summary>
+
+Run this script to verify that the MCP server starts, the stdio MCP connection initializes correctly, and a real tool call (`search_series`) succeeds.
+
+```bash
+cd mcp-fred
+.venv/bin/python - <<'PY'
+import asyncio
+from mcp import ClientSession, StdioServerParameters
+from mcp.client.stdio import stdio_client
+
+async def main():
+    params = StdioServerParameters(
+        command=".venv/bin/python",
+        args=["fred_server.py"],
+    )
+    async with stdio_client(params) as (r, w):
+        async with ClientSession(r, w) as s:
+            await s.initialize()
+            tools = await s.list_tools()
+            print("tool_count =", len(tools.tools))
+            out = await s.call_tool("search_series", {"query": "unemployment rate", "limit": 1})
+            print(out.content[0].text)
+
+asyncio.run(main())
+PY
+```
+
+</details>
+
+## Examples
+
+<details>
+<summary>Calling MCP explicitly and with Series ID specified.</summary>
+
+```text
+$ codex
+OpenAI Codex (v0.101.0)
+model: gpt-5.3-codex xhigh
+directory: ~
+
+> Use the FRED MCP to retrieve the last 13 values of GS10 and create a matplotlib line chart saved to /Users/nicoloceneda/Desktop/gs10.png.
+
+I’ll fetch the latest 13 GS10 observations via FRED MCP, then generate and save a matplotlib line chart at /Users/nicoloceneda/Desktop/gs10.png.
+
+Called fred.get_observations({"series_id":"GS10","sort_order":"desc","limit":13})
+```
+
+Retrieved the last 13 GS10 observations from FRED and created the matplotlib line chart.
+
+  Saved file: /Users/nicoloceneda/Desktop/gs10.png
+
+  Values used (most recent first):
+
+  - 2026-01-01: 4.21
+  - 2025-12-01: 4.14
+  - 2025-11-01: 4.09
+  - 2025-10-01: 4.06
+  - 2025-09-01: 4.12
+  - 2025-08-01: 4.26
+  - 2025-07-01: 4.39
+  - 2025-06-01: 4.38
+  - 2025-05-01: 4.42
+  - 2025-04-01: 4.28
+  - 2025-03-01: 4.28
+  - 2025-02-01: 4.45
+  - 2025-01-01: 4.63
+
+Graph generated by MCP:
+
+![GS10 chart via MCP](assets/gs10.png)
+
+Original graph by FRED:
+
+![GS10 chart](assets/fredgraph.png)
+
+</details>
+
+<details>
+<summary>Without calling MCP explicitly and no Series ID specified.</summary>
+
+```text
+$ codex
+OpenAI Codex (v0.101.0)
+model: gpt-5.3-codex xhigh
+directory: ~
+
+> Tell me the latest value of US GDP (nominal).
+
+I’ll pull the most recent GDP observation from FRED now and report its date and value.
+
+Called fred.get_observations({"series_id":"GDP","limit":1,"sort_order":"desc"})
+```
+
+Latest FRED nominal U.S. GDP (GDP) is 31,098.027 (billions of dollars, SAAR), for 2025-07-01 (i.e., 2025 Q3).
+
+</details>
+
+## Functionality and endpoint coverage
+
+The server includes both dedicated tools and generic passthrough tools.
+
+<details>
+<summary>Generic passthrough</summary>
+
+- `fred_request(endpoint, params_json)` for `/fred/*`
+- `geofred_request(endpoint, params_json)` for `/geofred/*`
+- `fred_v2_request(endpoint, params_json)` for `/fred/v2/*`
+
+</details>
+
+<details>
+<summary>FRED categories</summary>
+
+- `get_category` -> `fred/category`
+- `get_category_children` -> `fred/category/children`
+- `get_category_related` -> `fred/category/related`
+- `get_category_series` -> `fred/category/series`
+- `get_category_tags` -> `fred/category/tags`
+- `get_category_related_tags` -> `fred/category/related_tags`
+
+</details>
+
+<details>
+<summary>FRED releases</summary>
+
+- `get_releases` -> `fred/releases`
+- `get_releases_dates` -> `fred/releases/dates`
+- `get_release` -> `fred/release`
+- `get_release_dates` -> `fred/release/dates`
+- `get_release_series` -> `fred/release/series`
+- `get_release_sources` -> `fred/release/sources`
+- `get_release_tags` -> `fred/release/tags`
+- `get_release_related_tags` -> `fred/release/related_tags`
+- `get_release_tables` -> `fred/release/tables`
+
+</details>
+
+<details>
+<summary>FRED series</summary>
+
+- `get_series` -> `fred/series`
+- `get_series_categories` -> `fred/series/categories`
+- `get_observations` -> `fred/series/observations`
+- `get_series_observations` -> alias of `get_observations`
+- `get_series_release` -> `fred/series/release`
+- `search_series` -> `fred/series/search`
+- `search_series_by_tags` -> `fred/series/search/tags`
+- `search_series_related_tags` -> `fred/series/search/related_tags`
+- `get_series_tags` -> `fred/series/tags`
+- `get_series_updates` -> `fred/series/updates`
+- `get_series_vintage_dates` -> `fred/series/vintagedates`
+
+</details>
+
+<details>
+<summary>FRED sources</summary>
+
+- `get_sources` -> `fred/sources`
+- `get_source` -> `fred/source`
+- `get_source_releases` -> `fred/source/releases`
+
+</details>
+
+<details>
+<summary>FRED tags</summary>
+
+- `get_tags` -> `fred/tags`
+- `get_related_tags` -> `fred/related_tags`
+- `get_tag_series` -> `fred/tags/series`
+
+</details>
+
+<details>
+<summary>GeoFRED maps</summary>
+
+- `get_map_shape_file` -> `geofred/shapes/file`
+- `get_map_series_group` -> `geofred/series/group`
+- `get_map_series_data` -> `geofred/series/data`
+- `get_map_regional_data` -> `geofred/regional/data`
+
+</details>
+
+<details>
+<summary>FRED v2</summary>
+
+- `get_release_observations_v2` -> `fred/v2/release/observations`
+
+</details>

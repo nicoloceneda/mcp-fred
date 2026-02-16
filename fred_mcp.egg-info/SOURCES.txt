@@ -7,3 +7,5 @@ fred_mcp.egg-info/dependency_links.txt
 fred_mcp.egg-info/entry_points.txt
 fred_mcp.egg-info/requires.txt
 fred_mcp.egg-info/top_level.txt
+tests/test_error_payloads.py
+tests/test_http_and_observations.py
